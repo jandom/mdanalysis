@@ -1,5 +1,5 @@
 # -*- Mode: python; tab-width: 4; indent-tabs-mode:nil; coding:utf-8 -*-
-# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 #
 # MDAnalysis --- http://www.MDAnalysis.org
 # Copyright (c) 2006-2015 Naveen Michaud-Agrawal, Elizabeth J. Denning, Oliver Beckstein
@@ -140,16 +140,6 @@ from ..lib import util
 
 
 logger = logging.getLogger("MDAnalysis.coordinates.AMBER")
-
-try:
-    import netCDF4 as netcdf
-except ImportError:
-    # Just to notify the user; the module will still load. However, NCDFReader and NCDFWriter
-    # will raise a proper ImportError if they are called without the netCDF4 library present.
-    # See Issue 122 for a discussion.
-    logger.debug("Failed to import netCDF4; AMBER NETCDFReader/Writer will not work. "
-                 "Install netCDF4 from https://github.com/Unidata/netcdf4-python.")
-    logger.debug("See also https://github.com/MDAnalysis/mdanalysis/wiki/netcdf")
 
 
 class Timestep(base.Timestep):
@@ -426,7 +416,7 @@ class NCDFReader(base.Reader):
         try:
             from scipy.io import netcdf
         except ImportError:
-            logger.fatal("scip.io.netcdf must be installed for the AMBER ncdf Reader.")
+            logger.fatal("scipy.io.netcdf must be installed for the AMBER ncdf Reader.")
             raise ImportError("scipy.io.netcdf package missing but is required "
                               "for the Amber Reader.")
 
@@ -681,7 +671,7 @@ class NCDFWriter(base.Writer):
         try:
             from scipy.io import netcdf
         except ImportError:
-            logger.fatal("scip.io.netcdf must be installed for the AMBER ncdf Reader.")
+            logger.fatal("scipy.io.netcdf must be installed for the AMBER ncdf Reader.")
             raise ImportError("scipy.io.netcdf package missing but is required "
                               "for the Amber Reader.")
 
