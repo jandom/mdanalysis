@@ -146,6 +146,7 @@ import warnings
 import bz2
 from itertools import izip
 import numpy as np
+import pandas as pd
 import logging
 
 import MDAnalysis
