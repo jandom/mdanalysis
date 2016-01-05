@@ -765,3 +765,19 @@ class ContactAnalysis1(object):
 
         if not filename is None:
             savefig(filename)
+
+
+def calculate_contacts(ref, u, selA, selB, radius=4.5, beta=5.0, alpha=1.5):
+
+    grA, grB = ref.select_atoms(selA), ref.select_atoms(selB)
+    dref = MDAnalysis.lib.distances.distance_array(grA.coordinates(), grB.coordinates())
+    mask = dref < radius
+    print("ref has {:d} contacts within {:.2f}".format(mask.sum(), radius))
+    results = []
+    grA, grB = u.select_atoms(selA), u.select_atoms(selB)
+    for ts in u.trajectory:
+        d = MDAnalysis.lib.distances.distance_array(grA.coordinates(), grB.coordinates())
+        x = 1/(1 + np.exp(beta*(d[mask] - alpha * dref[mask])))
+        results.append(( ts.time, x.sum()/mask.sum() ))
+    results = pd.DataFrame(results, columns=["Time (ps)", "Q"])
+    return results
